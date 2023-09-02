@@ -120,9 +120,10 @@ function getQueue(callback) {
         total: 0,
         json: true,
       };
+      data.trackList.splice(0, 0, response.currently_playing);
       for (var i = 0; i < data.trackList.length; i++) {
         data.total += data.trackList[i].duration_ms;
-        data.trackList[i].id = (i + 1 < 10 ? "0" : "") + (i + 1); // leading 0 so all numbers are 2 digits
+        data.trackList[i].id = (i < 10 ? "0" : "") + (i); // leading 0 so all numbers are 2 digits
       }
       document.getElementById("title").textContent = "Current Queue";
       callback(data);
