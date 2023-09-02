@@ -1,4 +1,4 @@
-// gets parameters from the url
+/** returns parameters from the url as array */
 function getHashParams() {
   var hashParams = {};
   var e,
@@ -10,19 +10,20 @@ function getHashParams() {
   return hashParams;
 }
 
-// formats millisecond time to minutes and seconds - MM:SS
+/** formats millisecond time to minutes and seconds - MM:SS
+ * @param time_in_ms
+ */
 function formatMs(time_in_ms) {
   minutes = Math.floor(time_in_ms / 60000);
   seconds = ((time_in_ms % 60000) / 1000).toFixed(0);
   return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
 }
 
-/* 
-updates table body with track information
-params: 
-  tableBody - element from html page
-  tracklist - trackList data from API response
-*/
+/**
+* updates table body with track information
+* @param tableBody element from html page
+* @param tracklist trackList data from API response
+**/
 function updateTableBody(trackList) {
   const tableBody = document.getElementById('trackTableBody');
   tableBody.innerHTML = ""
@@ -55,6 +56,11 @@ function updateTableBody(trackList) {
 
 }
 
+/**
+* Updates polaroidContainer div with polaroid divs with track information.
+* @param polaroidContainer element from html page that will contain all polaroid divs
+* @param tracklist trackList data from API response
+*/
 function populatePolaroids(polaroidContainer, trackList) {
   polaroidContainer.innerHTML = '';
   if (trackList.length == 0) {
@@ -83,7 +89,10 @@ function populatePolaroids(polaroidContainer, trackList) {
   }
 }
 
-// request top 10 tracks from spotify API
+/** request top 10 tracks from spotify API 
+ * @param timeRangeSlug spotify-defined time range for API call
+ * @param callback function for synchronous use of response data
+*/
 function retrieveTracks(timeRangeSlug, callback) {
   $.ajax({
     url: `https://api.spotify.com/v1/me/top/tracks?limit=10&time_range=${timeRangeSlug}`,
@@ -107,7 +116,9 @@ function retrieveTracks(timeRangeSlug, callback) {
   });
 }
 
-// request user's current queue from spotify API
+/** request user's current queue from spotify API
+ * @param callback function for synchronous use of response data
+*/
 function getQueue(callback) {
   $.ajax({
     url: `https://api.spotify.com/v1/me/player/queue`,
