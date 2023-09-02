@@ -58,21 +58,21 @@ function updateTableBody(trackList) {
 function populatePolaroids(polaroidContainer, trackList) {
   polaroidContainer.innerHTML = '';
   if (trackList.length == 0) {
-    trackList = [{album:{images:[{}, {url:"https://pic.onlinewebfonts.com/thumbnails/icons_294619.svg"}]}, id:"0", name:"no queue :(", artists: [{name: ""}]}];
+    trackList = [{ album: { images: [{}, { url: "https://pic.onlinewebfonts.com/thumbnails/icons_294619.svg" }] }, id: "0", name: "no queue :(", artists: [{ name: "" }] }];
   }
   for (const track of trackList) {
     const polaroid = document.createElement('div');
     polaroid.className = 'polaroid';
 
-      const imgElem = document.createElement('img');
-      imgElem.src = track.album.images[1].url;
+    const imgElem = document.createElement('img');
+    imgElem.src = track.album.images[1].url;
 
-      const idElem = document.createElement('p');
-      idElem.textContent = track.id;
-      const titleElem = document.createElement('p');
-      titleElem.textContent = track.name;
-      const nameElem = document.createElement('p');
-      nameElem.textContent = `${track.artists.map(artist => artist.name)}`;
+    const idElem = document.createElement('p');
+    idElem.textContent = track.id;
+    const titleElem = document.createElement('p');
+    titleElem.textContent = track.name;
+    const nameElem = document.createElement('p');
+    nameElem.textContent = `${track.artists.map(artist => artist.name)}`;
 
     polaroid.appendChild(imgElem);
     polaroid.append(idElem);
@@ -100,7 +100,7 @@ function retrieveTracks(timeRangeSlug, callback) {
         data.total += data.trackList[i].duration_ms;
         data.trackList[i].id = (i + 1 < 10 ? "0" : "") + (i + 1); // leading 0 so all numbers are 2 digits
       }
-      const periodTranslate = {"short_term":"Last Month", "medium_term":"Last 6 Months", "long_term":"All Time"}
+      const periodTranslate = { "short_term": "Last Month", "medium_term": "Last 6 Months", "long_term": "All Time" }
       document.getElementById("title").textContent = "My Top 10 " + periodTranslate[timeRangeSlug];
       callback(data);
     },
@@ -120,7 +120,9 @@ function getQueue(callback) {
         total: 0,
         json: true,
       };
-      data.trackList.splice(0, 0, response.currently_playing);
+      if (response.currently_playing) {
+        data.trackList.splice(0, 0, response.currently_playing);
+      }
       for (var i = 0; i < data.trackList.length; i++) {
         data.total += data.trackList[i].duration_ms;
         data.trackList[i].id = (i < 10 ? "0" : "") + (i); // leading 0 so all numbers are 2 digits
