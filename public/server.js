@@ -41,7 +41,7 @@ function updateTableBody(trackList) {
     nameCell.textContent = `${track.artists.map(artist => artist.name)}`;
 
     const durationCell = document.createElement('td');
-    durationCell.textContent = track.duration_ms;
+    durationCell.textContent = formatMs(track.duration_ms);
 
     row.appendChild(idCell);
     row.appendChild(titleCell);
