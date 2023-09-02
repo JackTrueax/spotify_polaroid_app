@@ -41,10 +41,7 @@ function updateTableBody(trackList) {
     nameCell.textContent = `${track.artists.map(artist => artist.name)}`;
 
     const durationCell = document.createElement('td');
-
-    let minutes = Math.floor(track.duration_ms / 60000);
-    let seconds = ((track.duration_ms % 60000) / 1000).toFixed(0); //rounds to integer 
-    durationCell.textContent = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+    durationCell.textContent = track.duration_ms;
 
     row.appendChild(idCell);
     row.appendChild(titleCell);
@@ -64,7 +61,13 @@ function updateTableBody(trackList) {
 function populatePolaroids(polaroidContainer, trackList) {
   polaroidContainer.innerHTML = '';
   if (trackList.length == 0) {
-    trackList = [{ album: { images: [{}, { url: "https://pic.onlinewebfonts.com/thumbnails/icons_294619.svg" }] }, id: "0", name: "no queue :(", artists: [{ name: "" }] }];
+    trackList = [{
+      album: { 
+        images: [{}, { url: "https://pic.onlinewebfonts.com/thumbnails/icons_294619.svg" }] 
+      }, 
+      id: "0", 
+      name: "no queue :(", 
+      artists: [{ name: "" }]}];
   }
   for (const track of trackList) {
     const polaroid = document.createElement('div');
